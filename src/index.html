@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= json.project.title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <%= t.include("partials/_adHead.html") %>
+    <style>
+[ng-cloak] {
+  display: none;
+}
+    </style>
+  </head>
+
+  <body ng-app="ceos">
+
+    <responsive-child>
+
+      <div ng-controller="CEOPayController" ng-cloak>
+
+        <div class="title">What the boss makes</div>
+        <div class="chatter">
+          Northwest companies continued to reward their chief executives handsomely in 2016. Compare their pay data, which was collected by Equilar from documents filed with the Securities and Exchange Commission.
+        </div>
+
+        <!-- <label>Total CEOs matching filter:{{(ceoData|filter:ceoFilter).length}}</label> -->
+        <!-- <div class="button" ng-click="filterBy = 'short'" ng-class={active:filterBy=='short'}>Featured CEOs</div> -->
+        <div class="button-container">
+          <div class="button" ng-click="switchData('short', false)" ng-class="{active:filterBy=='short'}">Top paid CEOs</div>
+          <div class="button" ng-click="switchData('all', true)" ng-class="{active:filterBy=='all'}">All ({{counts.all}})</div>
+          <div class="button" ng-click="switchData('men', true)" ng-class="{active:filterBy=='men'}">Men ({{counts.men}})</div>
+          <div class="button" ng-click="switchData('women', true)" ng-class="{active:filterBy=='women'}">Women ({{counts.women}})</div>
+          <div class="button" ng-click="switchData('under40', true)" ng-class="{active:filterBy=='under40'}">Under 40 ({{counts.under40}})</div>
+          <div class="button" ng-click="switchData('over40', true)" ng-class="{active:filterBy=='over40'}">40+ ({{counts.over40}})</div>
+        </div>
+
+        <table border=1 class="ceo-table">
+          <thead class="header">
+            <tr>
+            <th class="rank">#</th>
+            <th class="image"></th>
+            <th
+              class="{{header.className}}"
+              ng-repeat="header in headers"
+              ng-click="sortTable(header)"
+              ng-class="{
+                left: header.short == 'company',
+                down: lastSort == header && sortOrder == -1,
+                up: lastSort == header && sortOrder == 1
+              }">
+                <span class="desktop">{{header.title}}</span>
+                <span class="mobile">{{header.alternate}}</span>
+
+                <div ng-if="{{header.className}} == cash">(Salary, bonus and cash incentives)</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="ceo in ceoData | ceoFilter:filterBy">
+              <td class="rank">{{ceo.rank}}
+              <td class="image">
+
+                <img ng-if="ceo.mug" class="mug" src="./assets/ceo_mugs_2016/{{ceo.mug}}.jpg">
+<!--                 <img ng-class="{ mug: ceo.mug, anon: !ceo.mug }" src="./assets/ceo_mugs_2016/{{ceo.mug || 'malephoto'}}.jpg"></img> -->
+                <!-- <img class="mug" src="./assets/ceo_mugs_2015/{{ceo.mug || 'malephoto'}}.jpg"></img> -->
+              <td ng-if="!ceo.sup" class=name active-touch> {{ceo.name}}
+              <td ng-if="ceo.sup" class=name active-touch> {{ceo.name}}<sup>1</sup>
+              <td class=age active-touch> {{ceo.age}}
+              <td class=company active-touch> {{ceo.company}}
+              <td class="cash" active-touch> ${{ceo.cash | number}}
+              <td class="equity" active-touch> ${{ceo.equity | number}}
+<!--               <td class="other" active-touch> {{ceo.other}} -->
+              <td class="total" active-touch> ${{ceo.total | number}}
+              <td class="change" active-touch> {{ceo.change | percentage}}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <ul class="footnotes">
+        <li class="asterisk"> * Cash amount includes salary, bonus and cash incentives</li>
+        <li class="asterisk"> ** Stock grants and stock options</li>
+        <li class="asterisk" > *** Total pay includes other income</li>
+        <li> <sup>1</sup> Melanie Dressel died Feb. 19, 2017.
+      </ul>
+      <div class="source"> Source: <a href="http://www.equilar.com">Equilar</a>, company disclosures</div>
+      <div class="credit">Vanessa Mart&iacute;nez / The Seattle Times</div>
+
+    </responsive-child>
+
+
+    <script>
+      var ceoData = <%= JSON.stringify(csv.ceo_pay_2016) %>;
+    </script>
+    <script src="app.js"></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_adFoot.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+
+
+  </body>
+</html>

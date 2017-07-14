@@ -1,0 +1,19 @@
+{
+  "s3": {
+    "stage": {
+      "bucket": "projects-staging.seattletimes.com",
+      "path": "emotional-disappearance"
+    },
+    "live": {
+      "bucket": "projects.seattletimes.com",
+      "path": "2017/business/ceo-pay-table"
+    }
+  },
+  "title": "",
+  "description": "",
+  "url": "",
+  "slug": "",
+  "tags": [],
+  "production": true,
+  "embedded": true
+}

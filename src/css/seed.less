@@ -1,0 +1,400 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@import "seattletimes";
+
+body {
+  font-family: @df-sans;
+  font-size: 14px;
+  max-width: 800px;
+  padding: 0;
+  margin: 0;
+
+  @media @tablet {
+    font-size: 12px;
+  }
+
+  @media @mobile {
+    font-size: 15px;
+  }
+
+  .title {
+    // font-family: @hed;
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+    padding-bottom: 5px;
+
+    @media @mobile {
+      font-size: 23px;
+    }
+  }
+
+  .chatter {
+    font-size: 18px;
+    // font-family: @hed;
+    padding-bottom: 15px;
+    text-align: center;
+
+    @media @mobile {
+      font-size: 16px;
+    }
+  }
+
+}
+
+table.ceo-table {
+  margin-top: 20px;
+  line-height: 1.5;
+  border-collapse: collapse;
+  width: 100%;
+
+  @media @mobile {
+    font-size: 13px;
+  }
+
+  thead tr {
+    border: none;
+  }
+  tr:nth-child(even) td {background: @st-light-blue};
+  tr:nth-child(odd) td {background: white};
+  border: none;
+
+  td, th {
+    padding: 8px 8px;
+    border: none;
+    line-height: 16px;
+    text-align: left;
+
+    @media @mobile {
+      padding: 2px 4px;
+    }
+  }
+
+  th.pay {
+    .desktop {
+      display: inline;
+
+      @media @mobile {
+        display: none;
+      }
+    }
+
+    .mobile {
+      display: none;
+
+      @media @mobile {
+        display: inline;
+      }
+    }
+
+  }
+
+  .rank {
+    width: 43px;
+    @media @mobile and (orientation: portrait) {
+      width: 20px;
+      max-width: 20px;
+    }
+  }
+
+  .image {
+    width: 55px;
+
+    img {
+      width: 34px;
+    }
+
+    @media @mobile and (orientation: portrait){
+      display: none;
+    }
+  }
+
+  .age {
+    width: 70px;
+    @media @mobile and (orientation: portrait) {
+      display: none;
+    }
+  }
+
+  .company, .name{
+    width: 175px;
+    @media @mobile and (orientation: portrait) {
+      width: 50px;
+      text-wrap: true;
+    }
+  }
+
+  .total {
+    font-weight: bold;
+  }
+
+  .cash, .equity {
+    @media @mobile {
+      display: none;
+    }
+  }
+
+}
+
+.header {
+  color: @df-dark-gray;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 4px solid @df-dark-gray;
+  &:hover {
+    cursor: pointer;
+  }
+  .rank {
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.button-container {
+  text-align: center;
+
+  .button {
+    display: inline-block;
+    margin: 3px 3px;
+    border: 1px @st-light-blue;
+    background-color: @st-light-blue;
+    padding: 5px 10px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: @st-dark-blue;
+      color: black;
+    }
+
+    &.active {
+      background-color: @st-dark-blue;
+      color: black;
+      font-weight: bold;
+    }
+
+    @media @mobile and (orientation: landscape){
+      padding: 5px 5px;
+    }
+  }
+}
+
+&.up::after, &.down::after {
+  // position: absolute;
+  color: @df-dark-gray;  // color: rgb(188, 92, 35);
+  font-size: 0.7em;
+  // text-align: right;
+  margin-left: 4px;
+}
+&.up::after {
+  content: "\25B2";
+  padding-top: 0.2em;
+}
+&.down::after {
+  content: "\25BC";
+  padding-top: 0.2em;
+}
+
+.outer-bar {
+  line-height: 1;
+  font-weight: bold;
+
+  .bar-container {
+    position: relative;
+  }
+}
+
+// // define colors
+// @salary: black;
+// @bonus: darken(yellow,20%); //lighten(#34401B, 10%);
+// @neip: #A9CE56;
+// @other: purple;
+// @equity: spin(#58903F, 30);
+
+// define colors
+@salary: #534D53;
+@bonus: #5B7F3C;
+@neip: #89A43F;
+@equity: #BED630;
+@other: #707AB9;
+
+
+.pay-bar {
+  height: 20px;
+  float: left;
+  cursor: pointer;
+
+  @media @mobile {
+    height: 30px;
+  }
+
+  &.salary {
+    background: @salary;
+  }
+  &.bonus {
+    background: @bonus;
+  }
+  &.neip {
+    background: @neip;
+  }
+  &.equity {
+    background: @equity;
+  }
+  &.other {
+    background: @other;
+  }
+
+}
+
+.bar-container {
+
+  // font-family: @df-serif;
+  font-family: @df-sans;
+  margin: 6px 0;
+
+  &::after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+  }
+
+  .tooltip {
+    position: absolute;
+    background: white;
+    border: 1px solid @df-light-gray;
+    line-height: 130%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, .2);
+    padding: 5px;
+    top: calc(~"100% + 5px");
+    right: 0;
+    display: none;
+    z-index: 999;
+    list-style-type: none;
+    margin: 10;
+
+    &.color_bar {
+      background: @neip;
+    }
+
+    .text-pop-up {
+      display: inline-block;
+      text-align: left;
+      margin-left: 10px;
+      vertical-align: top;
+    }
+
+
+    .color-box {
+      list-style: none;
+      padding: 8px;
+      width: 10px;
+      vertical-align: center;
+      // height: 4px;
+      display: inline-block;
+      &.salary {
+        background: @salary;
+      }
+      &.bonus {
+        background: @bonus;
+      }
+      &.neip {
+        background: @neip;
+      }
+      &.equity {
+        background: @equity;
+      }
+      &.other {
+        background: @other;
+      }
+    }
+
+    li {
+      white-space: nowrap;
+    }
+
+  }
+
+  .active & .tooltip {
+    display: block;
+  }
+
+  &:hover .tooltip {
+    display: block;
+  }
+
+}
+
+table.ceo-table tr:last-child .tooltip {
+  bottom: calc(~"100% + 5px");
+  top: auto;
+}
+
+.mug {
+  // height: 45px;
+  position: relative;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  border-color: white;
+  border-style: solid;
+  border-width: 0px;
+
+  // &:hover {
+  //   @scale: 2;
+  //   //height: 100px;
+  //   // cursor: pointer;
+  //   -webkit-transform: scale(@scale);
+  //   transform: scale(@scale);
+  //   z-index: 999;
+  //   border-width: 2px;
+  //   cursor: pointer;
+  // }
+
+}
+
+label {
+  font-size: 20;
+}
+
+.footnotes {
+  padding-top: 20px;
+  text-align: center;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 12px;
+
+  li {
+    display: inline-block;
+    margin-right: 23px;
+  }
+  
+  .asterisk {
+    @media @mobile {
+      display: none;
+    }
+  }
+}
+
+.source{
+  font-style: italic;
+  padding-top: 10px;
+}
+.credit{
+  text-transform: uppercase;
+  padding-bottom: 20px;
+}
+
+.source,
+.credit {
+  font-size: 11.5px;
+  color: #7e838b;
+}
